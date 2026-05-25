@@ -14,25 +14,6 @@ use App\Service\Login\LoginService;
 use App\Mapper\UserMapper;
 class LoginController extends AbstractController
 {
-    #[Route('/auth', name: 'app_auth')]
-    public function index(Request $request, RegistrationService $service): Response
-    {
-        $registerDto = new RegistrationDTO();
-
-        $registerForm = $this->createForm(RegistrationFormType::class, $registerDto);
-        $registerForm->handleRequest($request);
-
-        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
-
-            $service->register($registerDto);
-
-            return $this->redirectToRoute('app_auth');
-        }
-
-        return $this->render('auth/login.html.twig', [
-            'form' => $registerForm->createView()
-        ]);
-    }
 
     #[Route('/register', name: 'app_register', methods: ['POST'])]
     public function register(Request $request, RegistrationService $service)
@@ -43,14 +24,33 @@ class LoginController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $service->register($dto);
-
             return $this->redirectToRoute('app_auth');
         }
 
-        return $this->redirectToRoute('app_auth');
+        return $this->render('auth/login.html.twig', [
+            'form' => $registerForm->createView()
+        ]);
     }
+
+    #[Route('/auth', name: 'app_auth')]
+    public function auth(Request $request, RegistrationService $service): Response
+    {
+        $registerDto = new RegistrationDTO();
+        $registerForm = $this->createForm(RegistrationFormType::class, $registerDto);
+        $registerForm->handleRequest($request);
+
+        if ($registerForm->isSubmitted() && $registerForm->isValid()) {
+            $service->register($registerDto);
+            return $this->redirectToRoute('app_auth');
+        }
+
+        return $this->render('auth/login.html.twig', [
+            'form' => $registerForm->createView()
+        ]);
+    }
+
+
 
     #[Route('/auth/show', name: 'auth_show')]
     public function show(): Response

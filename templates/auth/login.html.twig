@@ -37,8 +37,7 @@
                         <div class="col-md-6">
                             <div class="card-body p-5">
                                 <h2 class="card-title mb-4">Login to Your Account</h2>
-                               
-
+                            
                                 <form method="post" action="{{ path('app_auth') }}">
 
                                 <input type="email"
@@ -70,15 +69,18 @@
                                 <h2 class="card-title mb-4">Create an Account</h2>
                                 <h2>Register</h2>
 
-                                {{ form_start(form) }}
+                                {{ form_start(form, {
+                                    action: path('app_register'),
+                                    method: 'POST'
+                                }) }}
 
-                                    {{ form_row(form.name) }}
-                                    {{ form_row(form.email) }}
-                                    {{ form_row(form.password) }}
+                                {{ form_row(form.name) }}
+                                {{ form_row(form.email) }}
+                                {{ form_row(form.password) }}
 
-                                    <button class="btn btn-success">Sign up</button>
+                                <button class="btn btn-success">Register</button>
 
-                                {{ form_end(form) }}
+                               {{ form_end(form) }}
                             </div>
                         </div>
                     </div>
