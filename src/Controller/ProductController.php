@@ -21,7 +21,7 @@ final class ProductController extends AbstractController
         $this->categoryRepository = $categoryRepository;
     }
 
-    // Affiche tous les produits si aucune catégorie n'est spécifiée
+  
     #[Route('/products', name: 'products')]
     public function index(): Response
     {
@@ -33,7 +33,7 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    // Affiche les produits par catégorie
+   
     #[Route('/category/{id}', name: 'products_by_category')]
     public function byCategory(int $id): Response
     {
@@ -53,7 +53,7 @@ final class ProductController extends AbstractController
         ]);
     }
 
-    // Détails d'un produit
+  
     #[Route('/product/{id}', name: 'product_details')]
     public function details(int $id): Response
     {
